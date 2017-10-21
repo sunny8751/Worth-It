@@ -48,9 +48,9 @@ def next_round(oi, ci):
 def database_finder(inp):
     value = 0
     for item in inp:
-        if (db.getMongoPrice(item) != 0):
+        if (db.getMongoPrice(item) != "0"):
             value = db.getMongoPrice(item)
-    return value
+    return int(value)
 
 def get_unit(inp):
     unit = ""
