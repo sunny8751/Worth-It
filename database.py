@@ -2,6 +2,7 @@ from pymongo import MongoClient
 import numpy as np
 import bottlenose
 from xml.etree import ElementTree as etree
+import urllib
 
 db = MongoClient('mongodb://sunny8751:gatechfinance@vandyhacksiv-shard-00-00-swivj.mongodb.net:27017,vandyhacksiv-shard-00-01-swivj.mongodb.net:27017,vandyhacksiv-shard-00-02-swivj.mongodb.net:27017/test?ssl=true&replicaSet=VandyHacksIV-shard-0&authSource=admin')['vandyhacks']
 
@@ -55,7 +56,13 @@ def getMap(root):
 		return map
 
 def getAmazonProductInfo(productName):
-	response = amazon.ItemSearch(Keywords=productName, SearchIndex="All", ResponseGroup="Offers")
+	response = None
+	while response is None:
+		try:
+			response = amazon.ItemSearch(Keywords=productName, SearchIndex="All", ResponseGroup="Offers")
+		except urllib.error.HTTPError:
+			pass
+
 	# print(response)
 	# response = amazon.ItemLookup(ItemId="B007OZNUCE", ResponseGroup="Offers")
 	# print(response)
@@ -87,7 +94,8 @@ def getAmazonProductInfo(productName):
 # print getMongoPrice("cookout")
 # print getMongoUnit("cookout")
 # getAmazonProductInfo("Kindle")
-# print getAmazonProductInfo("Ramen")
+# print(getAmazonProductInfo("Ramen"))
+print(printMongoProducts())
 
 
 
