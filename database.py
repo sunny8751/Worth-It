@@ -16,6 +16,9 @@ def printMongoProducts():
 	for product in list(db.products.find()):
 		print(product)
 
+def removeMongoProduct(productName):
+	db.products.remove({"name": productName})
+
 def addMongoProduct(productName, productPrice, productUnit):
 	products = db.products
 
@@ -96,9 +99,11 @@ def getAmazonProductInfo(productName):
 # getAmazonProductInfo("Kindle")
 # print(getAmazonProductInfo("Ramen"))
 print(printMongoProducts())
+# print getAmazonProductInfo("Ramen")
+# print getAmazonProductInfo("north face")
 
-
-
-
+# addMongoProduct("sprite", "a", "d")
+# removeMongoProduct(None)
+# printMongoProducts()
 
 
