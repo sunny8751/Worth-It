@@ -11,3 +11,5 @@ welcome: Welcome to worth it, where we compare things you want with things you n
 state: A {{oi_pass}} is worth {{ci_price}} {{ci_pass}} {{ci_units}}
 
 error: Something went wrong in your request, please try again
+
+success: Sucesfully added {{ itemname }} to database

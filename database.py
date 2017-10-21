@@ -71,7 +71,13 @@ def getMap(root):
 		return map
 
 def getAmazonProductInfo(productName):
-	response = amazon.ItemSearch(Keywords=productName, SearchIndex="All", ResponseGroup="Offers")
+	response = None
+	while response is None:
+		try:
+			response = amazon.ItemSearch(Keywords=productName, SearchIndex="All", ResponseGroup="Offers")
+		except urllib.error.HTTPError:
+			pass
+
 	# print(response)
 	# response = amazon.ItemLookup(ItemId="B007OZNUCE", ResponseGroup="Offers")
 	# print(response)
@@ -112,6 +118,8 @@ def getAmazonProductInfo(productName):
 # print getMongoPrice("cookout")
 # print getMongoUnit("cookout")
 # getAmazonProductInfo("Kindle")
+# print(getAmazonProductInfo("Ramen"))
+# print(printMongoProducts())
 # print getAmazonProductInfo("Ramen")
 # print getAmazonProductInfo("iphone")
 # print getAmazonProductInfo("couch")
@@ -122,9 +130,4 @@ def getAmazonProductInfo(productName):
 # print getAmazonProductInfo("backpack")
 # print getAmazonProductInfo("pants")
 # print getAmazonProductInfo("paper")
-
-# addMongoProduct("sprite", "a", "d")
-# removeMongoProduct('coke can')
-# printMongoProducts()
-
 
