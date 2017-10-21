@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import bottlenose
 from xml.etree import ElementTree as etree
-from StringIO import StringIO
 
 db = MongoClient('mongodb://sunny8751:gatechfinance@vandyhacksiv-shard-00-00-swivj.mongodb.net:27017,vandyhacksiv-shard-00-01-swivj.mongodb.net:27017,vandyhacksiv-shard-00-02-swivj.mongodb.net:27017/test?ssl=true&replicaSet=VandyHacksIV-shard-0&authSource=admin')['vandyhacks']
 
@@ -56,7 +55,6 @@ def getAmazonProductInfo(productName):
 
 	response = amazon.ItemSearch(Keywords=productName, SearchIndex="All", ResponseGroup="Offers")
 	# print(response)
-	# responseXML = StringIO(response)
 	# response = amazon.ItemLookup(ItemId="B007OZNUCE", ResponseGroup="Offers")
 	# print(response)
 	# for event, elem in etree.iterparse(responseXML, events=('start-ns',)):
@@ -79,6 +77,12 @@ def getAmazonProductInfo(productName):
 # getMongoProducts()
 # print getMongoPrice("cookout")
 # print getMongoUnit("cookout")
+getAmazonProductInfo("Kindle")
 
-for product in list(db.products.find()):
-	print(product)
+
+
+
+
+
+
+
