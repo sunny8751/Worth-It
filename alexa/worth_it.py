@@ -1,15 +1,40 @@
 import logging
 from random import randint
-from flask import Flask, render_template
+from flask import Flask
 from flask_ask import Ask, statement, question, session
 import database as db
 import re
 
+from . import alexa
 
-app = Flask(__name__)
-ask = Ask(app, "/")
+def open_template():
+    template = {}
+    file = open("templates.yaml")
+    for line in file:
+        # if line is more than just "\n"
+        if len(line) > 2:
+            tokens = line.split(": ")
+            template[tokens[0]] = tokens[1]
+    return template
+
+template = open_template()
+
+def render_template(key, **optional):
+    global template
+    answer = template[key]
+    if len(optional) > 0:
+        tokens = re.split("}}|{{", answer)
+        for i in range(len(tokens)):
+            token = tokens[i].strip()
+            if token in optional:
+                tokens[i] = optional[token]
+        return "".join(tokens)
+    else:
+        return answer
+
+# alexaApp = Flask(__name__)
+ask = Ask(alexa, "/")
 logging.getLogger("flask_ask").setLevel(logging.DEBUG)
-
 
 @ask.launch
 def new_game():
@@ -38,6 +63,12 @@ def convert_intent(oi, ci):
 
         compared = oi_price / ci_price
         compared = str(round(compared, 2))
+
+        if compared != 1:
+            #make unit plural
+            oi_unit = oi_unit + "s"
+            ci_unit = ci_unit + "s"
+
         state = render_template('state', oi_pass=oi_item, ci_pass=ci_item, ci_price=compared, ci_units=ci_unit)
     return statement(state)
 
@@ -122,5 +153,13 @@ def mongodb_database_finder(inp):
             return (float(value), unit, item)
     return
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     alexaApp.run(debug=True)
+
+#     import sys
+#     sys.path.append('website')
+#     import runwebsite
+
+
+
+
