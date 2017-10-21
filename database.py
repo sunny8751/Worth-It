@@ -2,14 +2,27 @@ from pymongo import MongoClient
 import numpy as np
 import bottlenose
 from xml.etree import ElementTree as etree
+from bs4 import BeautifulSoup
+from urllib2 import HTTPError
+import random
+import time
 
 db = MongoClient('mongodb://sunny8751:gatechfinance@vandyhacksiv-shard-00-00-swivj.mongodb.net:27017,vandyhacksiv-shard-00-01-swivj.mongodb.net:27017,vandyhacksiv-shard-00-02-swivj.mongodb.net:27017/test?ssl=true&replicaSet=VandyHacksIV-shard-0&authSource=admin')['vandyhacks']
+
+
+def error_handler(err):
+    ex = err['exception']
+    if isinstance(ex, HTTPError) and ex.code == 503:
+        time.sleep(random.expovariate(0.1))
+        return True
+
 
 # use Bottlenose to access Amazon Product Advertising API
 AWS_ACCESS_KEY_ID = 'AKIAJIOGJFBGV2UXRUAQ'
 AWS_SECRET_ACCESS_KEY = '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'
 AWS_ASSOCIATE_TAG = 'sunny8751-20'
-amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG)
+amazon = bottlenose.Amazon(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_ASSOCIATE_TAG,
+    MaxQPS=0.9, Parser=lambda text: BeautifulSoup(text, 'xml'), ErrorHandler=error_handler)
 
 def printMongoProducts():
 	for product in list(db.products.find()):
@@ -71,17 +84,26 @@ def getAmazonProductInfo(productName):
 	# 	print(child.tag, child.attrib)
 
 	#parse the xml into an ElementTree
-	response = etree.XML(response)
+	# response = etree.XML(response)
 	#convert ElementTree into map
-	response = getMap(response)
-	price = response["Items"]["Item"]["OfferSummary"]["LowestNewPrice"]["Amount"].text
+	# response = getMap(response)
+	# price = response["Items"]["Item"]["OfferSummary"]["LowestNewPrice"]["Amount"].text
+	if response.find('Amount') == None:
+		return None
+	price = response.find('Amount').string
 
-	itemId = response["Items"]["Item"]["ASIN"].text
+	# itemId = response["Items"]["Item"]["ASIN"].text
+	if response.find('ASIN') == None:
+		return None
+	itemId = response.find('ASIN').string
 
 	response = amazon.ItemLookup(ItemId=itemId)
-	response = etree.XML(response)
-	response = getMap(response)
-	description = response["Items"]["Item"]["ItemAttributes"]["Title"].text
+	# response = etree.XML(response)
+	# response = getMap(response)
+	# description = response["Items"]["Item"]["ItemAttributes"]["Title"].text
+	if response.find('Title') == None:
+		return None
+	description = response.find('Title').string
 
 	return (description, price)
 
@@ -91,10 +113,18 @@ def getAmazonProductInfo(productName):
 # print getMongoUnit("cookout")
 # getAmazonProductInfo("Kindle")
 # print getAmazonProductInfo("Ramen")
-# print getAmazonProductInfo("north face")
+# print getAmazonProductInfo("iphone")
+# print getAmazonProductInfo("couch")
+# print getAmazonProductInfo("laptop")
+# print getAmazonProductInfo("coke")
+# print getAmazonProductInfo("mouse")
+# print getAmazonProductInfo("headphone")
+# print getAmazonProductInfo("backpack")
+# print getAmazonProductInfo("pants")
+# print getAmazonProductInfo("paper")
 
 # addMongoProduct("sprite", "a", "d")
-removeMongoProduct(None)
-printMongoProducts()
+# removeMongoProduct('coke can')
+# printMongoProducts()
 
 
