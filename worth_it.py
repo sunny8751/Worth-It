@@ -2,8 +2,10 @@ import logging
 from random import randint
 from flask import Flask, render_template
 from flask_ask import Ask, statement, question, session
+from pymongo import MongoClient
 
 
+connection = Connection()
 app = Flask(__name__)
 ask = Ask(app, "/")
 logging.getLogger("flask_ask").setLevel(logging.DEBUG)
