@@ -5,7 +5,6 @@ from flask_ask import Ask, statement, question, session
 import database as db
 
 
-connection = Connection()
 app = Flask(__name__)
 ask = Ask(app, "/")
 logging.getLogger("flask_ask").setLevel(logging.DEBUG)
@@ -18,21 +17,23 @@ def new_game():
 
 
 @ask.intent("ConvertIntent" , mapping={'oi': 'original_item', 'ci': 'compared_item'})
-def next_round(oi, ci):
+def convert_intent(oi, ci):
     # test: oi = north face backpack
     # implement a search on amazon.com for the price of this item
     print(oi)
     print(ci)
     test_oi_price = 50.00
-    ci_price = database_finder(ci.split(" "))
-    units = get_unit(ci.split(" "))
-
+    ci_data = database_finder(ci.split(" "))
+    print(ci_data)
     # test: ci = coffee
     # implement a mongdb lookup to get the value of coffee
     
-
-    compared = test_oi_price / ci_price
-    state = render_template('state', oi_pass=oi, ci_pass=ci, ci_price=compared, ci_units=units)
+    if not ci_data:
+        state = render_template('error')
+    else:
+        compared = test_oi_price / ci_data[0]
+        compared = str(round(compared, 2))
+        state = render_template('state', oi_pass=oi, ci_pass=ci_data[2], ci_price=ci_data[0], ci_units=ci_data[1])
     return statement(state)
 
 
@@ -50,14 +51,9 @@ def database_finder(inp):
     for item in inp:
         if (db.getMongoPrice(item) != "0"):
             value = db.getMongoPrice(item)
-    return int(value)
-
-def get_unit(inp):
-    unit = ""
-    for item in inp:
-        if (db.getMongoUnit(item) != ""):
-            unit = db.getMongoPrice(item)
-    return unit
+            unit = db.getMongoUnit(item)
+            return (float(value), unit, item)
+    return
 
 if __name__ == '__main__':
     app.run(debug=True)
