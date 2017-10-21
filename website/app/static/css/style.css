@@ -4,17 +4,18 @@ body {
 
 
 #response {
-	font-size: 300px;
+	font-size: 90px;
 	color: white;
 	padding-bottom: 100px;
 }
 
 .response {
-	padding: 400px;
+	padding: 70px;
+	padding-bottom: 100px;
 }
 
 .typed-cursor{
-    font-size: 300px;
+    font-size: 90px;
     opacity: .6;
     -webkit-animation: blink 0.7s infinite;
     -moz-animation: blink 0.7s infinite;
