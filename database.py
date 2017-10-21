@@ -15,6 +15,10 @@ def printMongoProducts():
 	for product in list(db.products.find()):
 		print(product)
 
+def removeMongoProduct(productId):
+	from bson.objectid import ObjectId
+	db.products.remove({"_id": ObjectId(productId)})
+
 def addMongoProduct(productName, productPrice, productUnit):
 	products = db.products
 
@@ -87,9 +91,9 @@ def getAmazonProductInfo(productName):
 # print getMongoPrice("cookout")
 # print getMongoUnit("cookout")
 # print getAmazonProductInfo("Ramen")
+# print getAmazonProductInfo("north face")
 
-
-
-
+# removeMongoProduct('59eb0143cbafc55654d910ad')
+# printMongoProducts()
 
 
