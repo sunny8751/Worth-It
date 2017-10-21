@@ -1,4 +1,0 @@
-Instructions
-
-Install Bottlenose:
-pip install git+git://github.com/lionheart/bottlenose

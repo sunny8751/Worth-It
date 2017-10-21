@@ -1,0 +1,15 @@
+Instructions
+
+Install Bottlenose:
+pip install git+git://github.com/lionheart/bottlenose
+
+
+
+Run website:
+
+cd into website
+
+Do either (Python 2.7):
+1. FLASK_APP=app/__init__.py flask run
+2. chmod a+x runwebsite.py
+	./runwebsite.py
