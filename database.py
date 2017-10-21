@@ -71,12 +71,12 @@ def getMap(root):
 		return map
 
 def getAmazonProductInfo(productName):
-	response = None
-	while response is None:
-		try:
-			response = amazon.ItemSearch(Keywords=productName, SearchIndex="All", ResponseGroup="Offers")
-		except urllib.error.HTTPError:
-			pass
+	# response = None
+	# while response is None:
+	# 	try:
+	response = amazon.ItemSearch(Keywords=productName, SearchIndex="All", ResponseGroup="Offers")
+		# except urllib.error.HTTPError:
+		# 	pass
 
 	# print(response)
 	# response = amazon.ItemLookup(ItemId="B007OZNUCE", ResponseGroup="Offers")
