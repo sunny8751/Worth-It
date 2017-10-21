@@ -16,6 +16,7 @@ idna==2.6
 ipaddress==1.0.18
 itsdangerous==0.24
 Jinja2==2.9.6
+lxml==4.1.0
 MarkupSafe==1.0
 numpy==1.13.3
 pipreqs==0.4.9
