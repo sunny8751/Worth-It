@@ -1,26 +1,307 @@
 {
-
-    "intents": [{
-
-        "intent": "YesIntent"
-
-    }, {
-
-        "intent": "ConvertIntent",
-
-        "slots": [{
-
-            "name": "original_item",
-            "type": "AMAZON.FOOD"
-
-        }, {
-
-            "name": "compared_item",
-            "type": "AMAZON.FOOD"
-
-        }]
-
-    }]
-
+  "intents": [
+    {
+      "name": "AddIntent",
+      "samples": [
+        "add {item_name} at {item_price} dollars per {item_unit}",
+        "add {item_name} at {item_price} dollar per {item_unit}",
+        "add one {item_name} at {item_price} dollar per {item_unit}",
+        "add a {item_name} at {item_price} dollar per {item_unit}",
+        "add a {item_name} can at {item_price} dollar per {item_unit}"
+      ],
+      "slots": [
+        {
+          "name": "item_name",
+          "type": "COMPAREDITEM",
+          "samples": []
+        },
+        {
+          "name": "item_price",
+          "type": "AMAZON.NUMBER",
+          "samples": []
+        },
+        {
+          "name": "item_unit",
+          "type": "AMAZONITEM",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "AMAZON.CancelIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.HelpIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.StopIntent",
+      "samples": []
+    },
+    {
+      "name": "ConvertIntent",
+      "samples": [
+        "convert {original_item} to {compared_item}",
+        "to convert the {original_item} to a {compared_item}",
+        "to convert a {original_item} to a {compared_item}",
+        "to convert a {original_item} into a {compared_item}",
+        "to convert a {original_item} into {compared_item}",
+        "convert {original_item} to a {compared_item}",
+        "compare {original_item} to a {compared_item}"
+      ],
+      "slots": [
+        {
+          "name": "original_item",
+          "type": "AMAZONITEM",
+          "samples": []
+        },
+        {
+          "name": "compared_item",
+          "type": "COMPAREDITEM",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "RemoveIntent",
+      "samples": [
+        "remove {item_name} from database",
+        "remove {item_name}"
+      ],
+      "slots": [
+        {
+          "name": "item_name",
+          "type": "COMPAREDITEM",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "YesIntent",
+      "samples": [
+        "yes",
+        "sure"
+      ],
+      "slots": []
+    }
+  ],
+  "types": [
+    {
+      "name": "AMAZONITEM",
+      "values": [
+        {
+          "id": null,
+          "name": {
+            "value": "Backpack",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "North Face",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Coffee",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Pencil",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Coke",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Sprite",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "iPhone",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "iPad",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Shirt",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Patagonia Jacket",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Jacket",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "RAMEN NOODLES",
+            "synonyms": [
+              "ramen",
+              "noodles"
+            ]
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "NORTH FACE BACKPACK",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Patagonia",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Suit",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Brooks Brothers",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Hydroflask",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Protein Powder",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Latte",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Coffee",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Ramen",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Yeezus",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Chick-Fil-A Milkshake",
+            "synonyms": [
+              "Chick-Fil-A"
+            ]
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Cookout Tray",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Chipotle Bowl",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Vanderbilt Tuition",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Protein Powder",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Gasoline",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "Chipotle",
+            "synonyms": [
+              "Bowl",
+              "Chipotle Bowl"
+            ]
+          }
+        }
+      ]
+    }
+  ]
 }
-

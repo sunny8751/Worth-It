@@ -38,9 +38,11 @@ def convert_intent(oi, ci):
     return statement(state)
 
 
-@ask.intent("RemoveIntent", mapping={'name':'item_name'})
-def addToDB(name):
+@ask.intent("AddIntent", mapping={'name':'item_name', 'price':'item_price', 'unit': 'item_unit'})
+def addToDB(name, price, unit):
     try:
+        if not name:
+            return statement(render_template('error'))
         if not unit:
             unit = "units"
         db.addMongoProduct(name, price, unit)
@@ -49,7 +51,11 @@ def addToDB(name):
         resp = render_template('error')
     return statement(resp)
 
-@ask.intent("AddIntent", mapping={'name':'item_name', 'price':'item_price', 'unit': 'item_unit'})
+@ask.intent("RemoveIntent", mapping={'name':'item_name'})
+def removeDB(name):
+    db.removeMongoProduct(name)
+    remove = render_template('remove', itemname=name)
+    return statement(remove)
 
 # @ask.intent("AnswerIntent", convert={'first': int, 'second': int, 'third': int})
 # def answer(first, second, third):
