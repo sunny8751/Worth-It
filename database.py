@@ -26,7 +26,7 @@ def getMongoPrice(productName):
 	products = db.products.find({"name": productName})
 	if products.count() == 0:
 		# product not found
-		return 0
+		return "0"
 	# return product's price
 	return products[0]["price"]
 
