@@ -76,5 +76,3 @@ def getAmazonProductInfo(productName):
 # main code
 # getAmazonProductInfo("Kindle")
 # getMongoProducts()
-print getMongoPrice("cookout")
-print getMongoUnit("cookout")
