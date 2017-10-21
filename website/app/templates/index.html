@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
   <head>
     <title>{{ title }}</title>
     <!-- <script type=text/javascript>
@@ -6,13 +6,41 @@
 	</script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script>window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')</script> -->
+     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+     <script type="text/javascript" src="{{ url_for('static', filename='js/typed.js') }}"></script>
+     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.quickfit.js') }}"></script>
+     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}"></script>
+     
   </head>
   <body>
-      <div>
-        <h1>{{ question }}</h1>
+      <div id="question_div">
+        <p class="hidden">{{ question }}</p>
       </div>
-      <div>
-        <h1>{{ answer }}</h1>
+      <div class="response">
+        <span class="question" id="response"></span>
+        <script type="text/javascript">
+          var typed = new Typed(".question", {
+            stringsElement: '#question_div',
+            typeSpeed: 30
+          });
+        </script>
+    </div>
+      
+
+
+      <div id="answer_div">
+        <h1 id="answer">{{ answer }}</h1>
       </div>
+      <div class="response">
+        <span class="answer" id="response"></span>
+        <script type="text/javascript">
+        var typed = new Typed(".answer", {
+          stringsElement: '#answer_div',
+          typeSpeed: 30
+        });
+      </script>
+    </div>
+
+      
   </body>
 </html>
