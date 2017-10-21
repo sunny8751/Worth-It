@@ -2,7 +2,7 @@ import logging
 from random import randint
 from flask import Flask, render_template
 from flask_ask import Ask, statement, question, session
-from pymongo import MongoClient
+import database as db
 
 
 connection = Connection()
@@ -24,13 +24,14 @@ def next_round(oi, ci):
     print(oi)
     print(ci)
     test_oi_price = 50.00
+    ci_price = database_finder(ci.split(" "))
+    units = get_unit(ci.split(" "))
 
     # test: ci = coffee
     # implement a mongdb lookup to get the value of coffee
-    test_ci_price = 2.00
+    
 
-    compared = test_oi_price / test_ci_price
-    units = ""
+    compared = test_oi_price / ci_price
     state = render_template('state', oi_pass=oi, ci_pass=ci, ci_price=compared, ci_units=units)
     return statement(state)
 
@@ -44,6 +45,19 @@ def next_round(oi, ci):
 #         msg = render_template('lose')
 #     return statement(msg)
 
+def database_finder(inp):
+    value = 0
+    for item in inp:
+        if (db.getMongoPrice(item) != 0):
+            value = db.getMongoPrice(item)
+    return value
+
+def get_unit(inp):
+    unit = ""
+    for item in inp:
+        if (db.getMongoUnit(item) != ""):
+            unit = db.getMongoPrice(item)
+    return unit
 
 if __name__ == '__main__':
     app.run(debug=True)
