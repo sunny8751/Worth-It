@@ -1,0 +1,11 @@
+welcome_mg: Yall are dumb as hell
+
+round_mg: Can you repeat the numbers {{ numbers|join(", ") }} backwards?
+
+win_mg: Good job!
+
+lose_mg: Sorry, that's the wrong answer.
+
+welcome: Welcome to worth it, where we compare things you want with things you need
+
+state: A {{oi_pass}} is worth {{ci_price}} {{ci_pass}} {{ci_units}}

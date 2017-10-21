@@ -1,0 +1,26 @@
+{
+
+    "intents": [{
+
+        "intent": "YesIntent"
+
+    }, {
+
+        "intent": "ConvertIntent",
+
+        "slots": [{
+
+            "name": "original_item",
+            "type": "AMAZON.FOOD"
+
+        }, {
+
+            "name": "compared_item",
+            "type": "AMAZON.FOOD"
+
+        }]
+
+    }]
+
+}
+
