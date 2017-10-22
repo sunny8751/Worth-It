@@ -1,0 +1,1 @@
+Languages/Technologies used: Flask, Python, Alexa, MongoDB, Jinja2 Tempelating, Javascript, Jquery, 
