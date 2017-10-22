@@ -1,1 +1,1 @@
-web: gunicorn website_package.__init__
+web: gunicorn run
