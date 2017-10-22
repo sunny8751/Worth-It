@@ -10,7 +10,27 @@
      <script type="text/javascript" src="{{ url_for('static', filename='js/typed.js') }}"></script>
      <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.quickfit.js') }}"></script>
      <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}"></script>
-     
+     <script type="text/javascript">
+       function poll() {
+          var poll_interval=0;
+
+          $.ajax({
+                  url: poll_url,
+                  type: 'GET',
+                  dataType: 'json',
+                  success: function(data) {
+                          display_message(data);
+                          poll_interval=0;
+                  },
+                  error: function () {
+                          poll_interval=1000;
+                  },
+                  complete: function () {
+                          setTimeout(poll, poll_interval);
+                  },
+          });
+        }
+     </script>
   </head>
   <body>
       <div id="question_div">
