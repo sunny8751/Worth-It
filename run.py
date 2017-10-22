@@ -9,7 +9,6 @@ def run_app():
 	app.register_blueprint(website)
 	app.register_blueprint(alexa)
 	app.run(debug=True)
-	return rederict("https://secure-sands-99264.herokuapp.com/website")
-
+	
 if __name__ == "__main__":
 	run_app()
