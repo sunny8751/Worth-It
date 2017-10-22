@@ -7,4 +7,4 @@
 from flask import Blueprint
 
 website = Blueprint('website', __name__)
-import views
+import website_package.views

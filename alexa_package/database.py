@@ -1,7 +1,6 @@
 from pymongo import MongoClient
 import numpy as np
 import bottlenose
-from xml.etree import ElementTree as etree
 from bs4 import BeautifulSoup
 from urllib2 import HTTPError
 import random
@@ -48,21 +47,19 @@ def addMongoProduct(productName, productPrice, productUnit):
 	id = products.insert_one(newProduct).inserted_id
 	print("Added product ID:", id)
 
-def getMongoPrice(productName):
+def getMongoInfo(productName):
+	price = ""
+	unit = ""
 	products = db.products.find({"name": productName})
 	if products.count() == 0:
 		# product not found
-		return "0"
+		price = "0"
+		unit = ""
+		return (price, unit)
 	# return product's price
-	return products[0]["price"]
-
-def getMongoUnit(productName):
-	products = db.products.find({"name": productName})
-	if products.count() == 0:
-		# product not found
-		return ""
-	# return product's unit
-	return products[0]["unit"]
+	price = products[0]["price"]
+	unit = products[0]["unit"]
+	return (price, unit)
 
 def getMap(root):
 		if len(root) == 0:

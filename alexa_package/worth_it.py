@@ -4,8 +4,10 @@ from flask import Flask
 from flask_ask import Ask, statement, question, session
 import database as db
 import re
+from alexa_package import alexa
+import sys
 
-from . import alexa
+import website_package.views
 
 def open_template():
     template = {}
@@ -44,14 +46,15 @@ def new_game():
 
 @ask.intent("ConvertIntent" , mapping={'oi': 'original_item', 'ci': 'compared_item'})
 def convert_intent(oi, ci):
+    website_package.views.setQuestion("Convert {} to {}.".format(oi, ci))
     # test: oi = north face backpack
     # implement a search on amazon.com for the price of this item
-    print(oi)
-    print(ci)
+    # print(oi)
+    # print(ci)
     oi_data = database_finder(oi)
     ci_data = database_finder(ci)
-    print(oi_data)
-    print(ci_data)
+    # print(oi_data)
+    # print(ci_data)
     # test: ci = coffee
     # implement a mongdb lookup to get the value of coffee
     
@@ -70,6 +73,7 @@ def convert_intent(oi, ci):
             ci_unit = ci_unit + "s"
 
         state = render_template('state', oi_pass=oi_item, ci_pass=ci_item, ci_price=compared, ci_units=ci_unit)
+        website_package.views.setAnswer(state + ".")
     return statement(state)
 
 
@@ -135,6 +139,7 @@ def database_finder(inp):
     amazonAnswer = db.getAmazonProductInfo(inp)
     if not amazonAnswer:
         return None
+    # price, unit, item name
     return (float(amazonAnswer[1])/100, "unit", getShortenedName(amazonAnswer[0]))
 
 def mongodb_database_finder(inp):
@@ -147,10 +152,10 @@ def mongodb_database_finder(inp):
             possible.append(" ".join(inp[i:j]))
     print possible
     for item in possible:
-        if (db.getMongoPrice(item) != "0"):
-            value = db.getMongoPrice(item)
-            unit = db.getMongoUnit(item)
-            return (float(value), unit, item)
+        itemInfo = db.getMongoInfo(item)
+        if (itemInfo[0] != "0"):
+            # price, unit, item name
+            return (float(value), itemInfo[1], itemInfo[0])
     return
 
 # if __name__ == '__main__':

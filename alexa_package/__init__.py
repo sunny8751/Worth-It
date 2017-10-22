@@ -2,4 +2,4 @@ from flask import Blueprint
 
 alexa = Blueprint('alexa', __name__)
 
-import worth_it
+import alexa_package.worth_it
