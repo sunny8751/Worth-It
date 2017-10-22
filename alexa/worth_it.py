@@ -39,7 +39,7 @@ logging.getLogger("flask_ask").setLevel(logging.DEBUG)
 @ask.launch
 def new_game():
     welcome_msg = render_template('welcome')
-    return statement(welcome_msg)
+    return statement(welcome_msg).simple_card('Worth It - Welcome', 'Say things like: "Alexa, ask worth it to compare Bose Headphones to a Chick-Fil-A Milkshake"')
 
 
 @ask.intent("ConvertIntent" , mapping={'oi': 'original_item', 'ci': 'compared_item'})
@@ -88,13 +88,13 @@ def addToDB(name, price, unit):
         resp = render_template('success', itemname=name)
     except:
         resp = render_template('error')
-    return statement(resp)
+    return statement(resp).simple_card('Worth It - Add', resp)
 
 @ask.intent("RemoveIntent", mapping={'name':'item_name'})
 def removeDB(name):
     db.removeMongoProduct(name)
     remove = render_template('remove', itemname=name)
-    return statement(remove)
+    return statement(remove).simple_card('Worth It - Removed', remove)
 
 # @ask.intent("AnswerIntent", convert={'first': int, 'second': int, 'third': int})
 # def answer(first, second, third):
