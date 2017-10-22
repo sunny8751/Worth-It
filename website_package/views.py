@@ -5,6 +5,7 @@ from website_package import website
 
 @website.route('/website')
 @website.route('/index')
+@website.route('/')
 def index():
 	question = "Compare Bose headphones to a Macbook Pro"
 	answer = "A Bose SoundTrue around-ear headphones II is worth 0.07 Apple 13"
