@@ -13,11 +13,6 @@ answer = None
 @website.route('/index')
 @website.route('/')
 def index():
-	question = "Compare Bose headphones to a Macbook Pro"
-	answer = "A Bose SoundTrue around-ear headphones II is worth 0.07 Apple 13"
-<<<<<<< HEAD
-	return render_template('website/index.html',title='Worth It?',question=question,answer=answer)
-=======
    	return render_template('website/index.html',title='Worth It?')
 
 @website.route('/question_poll')
@@ -57,7 +52,6 @@ def answerPoll():
    	answer = None
    	# print "polling:", json.dumps({"data": answer})
    	return json.dumps({"data": data})
->>>>>>> 0ea62121ce56f62b1baee2eab4cef6646c73a8d4
 
 def setQuestion(s):
 	global question
