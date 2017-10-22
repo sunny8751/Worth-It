@@ -2,6 +2,7 @@
 Visualize the price of a product in terms of products you already know using the Amazon Echo
 
 ![Logo](https://github.com/sunny8751/Worth-It/blob/master/logo%20copy.png?raw=true)
+
 [Example Demonstration](https://youtu.be/0AM2WQz2kiU)
 
 ## What inspired us
