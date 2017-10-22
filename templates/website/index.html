@@ -19,7 +19,6 @@
                   dataType: 'json',
                   success: function(data) {
                           var question = data["data"]
-                          console.log(question)
                           // clear the question and answer text
                           $(".question").text('')
                           $(".answer").text('')
@@ -32,6 +31,15 @@
                   },
                   error: function () {
                           console.log("error")
+                          // var question = "Something went wrong in your request, please try again"
+                          // // clear the question and answer text
+                          // $(".question").text('')
+                          // $(".answer").text('')
+                          // // remove previous animations
+                          // $('.typed-cursor').remove()
+                          // // start animation
+                          // options = {strings: [question], typeSpeed: 30}
+                          // var typed = new Typed(".question", options)
                           poll_interval=1000;
                   },
                   complete: function () {
@@ -56,6 +64,10 @@
                   },
                   error: function () {
                           console.log("error")
+                          // var answer = "Something went wrong in your request, please try again"
+                          // // start animation
+                          // options = {strings: [answer], typeSpeed: 50}
+                          // var typed = new Typed(".answer", options)
                           poll_interval=1000;
                   },
                   complete: function () {
@@ -70,7 +82,7 @@
       <div id="question_div">
         <p class="hidden"></p>
       <div class="response">
-        <span class="question" id="response"></span>
+        <span class="question" id="response">Ask a question... Example: "Alexa, ask Worth-It to compare Vanderbilt tuition to coke"</span>
         <!-- <script type="text/javascript">
           var typed = new Typed(".question", {
             stringsElement: '#question_div',
@@ -85,7 +97,7 @@
       <div id="answer_div">
         <h1 id="answer"></h1>
       <div class="response">
-        <span class="answer" id="response"></span>
+        <span class="answer" id="response-a"></span>
         <!-- <script type="text/javascript">
         var typed = new Typed(".answer", {
           stringsElement: '#answer_div',

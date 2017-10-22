@@ -14,6 +14,12 @@ body {
 	padding-bottom: 100px;
 }
 
+.response #response-a {
+	font-size: 75px;
+	color: white;
+	padding-bottom: 100px;
+}
+
 .typed-cursor{
     font-size: 90px;
     opacity: .6;
