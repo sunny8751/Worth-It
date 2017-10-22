@@ -95,6 +95,9 @@ def getAmazonProductInfo(productName):
 	# while response is None:
 	# 	try:
 	response = amazon.ItemSearch(Keywords=productName, SearchIndex="All", ResponseGroup="Offers")
+	imageURL = amazon.ItemSearch(Keywords=productName, SearchIndex="All", ResponseGroup="Images")
+
+	s = imageURL.find("MediumImage").find("URL").string
 		# except urllib.error.HTTPError:
 		# 	pass
 
@@ -131,7 +134,7 @@ def getAmazonProductInfo(productName):
 		return None
 	description = response.find('Title').string
 
-	return (description, price)
+	return (description, price, s)
 
 
 # main code

@@ -41,7 +41,7 @@ logging.getLogger("flask_ask").setLevel(logging.DEBUG)
 @ask.launch
 def new_game():
     welcome_msg = render_template('welcome')
-    return statement(welcome_msg)
+    return statement(welcome_msg).simple_card('Worth It - Welcome', 'Say things like: "Alexa, ask worth it to compare Bose Headphones to a Chick-Fil-A Milkshake"')
 
 
 @ask.intent("ConvertIntent" , mapping={'oi': 'original_item', 'ci': 'compared_item'})
@@ -61,8 +61,9 @@ def convert_intent(oi, ci):
     if not ci_data or not oi_data:
         state = render_template('error')
     else:
-        oi_price, oi_unit, oi_item = oi_data
-        ci_price, ci_unit, ci_item = ci_data
+        print(oi_data)
+        oi_price, oi_unit, oi_item, oi_image = oi_data
+        ci_price, ci_unit, ci_item, ci_image = ci_data
 
         compared = oi_price / ci_price
         compared = str(round(compared, 2))
@@ -71,10 +72,13 @@ def convert_intent(oi, ci):
             #make unit plural
             oi_unit = oi_unit + "s"
             ci_unit = ci_unit + "s"
-
+        if oi_image == None and ci_image == None:
+            image = "https://i.imgur.com/My1Shdi.png"
+        else:
+            image = oi_image if oi_image != None else ci_image
         state = render_template('state', oi_pass=oi_item, ci_pass=ci_item, ci_price=compared, ci_units=ci_unit)
         website_package.views.setAnswer(state + ".")
-    return statement(state)
+    return statement(state).standard_card(title='Worth It', text=state, small_image_url=image)
 
 
 @ask.intent("AddIntent", mapping={'name':'item_name', 'price':'item_price', 'unit': 'item_unit'})
@@ -88,13 +92,13 @@ def addToDB(name, price, unit):
         resp = render_template('success', itemname=name)
     except:
         resp = render_template('error')
-    return statement(resp)
+    return statement(resp).simple_card('Worth It - Add', resp)
 
 @ask.intent("RemoveIntent", mapping={'name':'item_name'})
 def removeDB(name):
     db.removeMongoProduct(name)
     remove = render_template('remove', itemname=name)
-    return statement(remove)
+    return statement(remove).simple_card('Worth It - Removed', remove)
 
 # @ask.intent("AnswerIntent", convert={'first': int, 'second': int, 'third': int})
 # def answer(first, second, third):
@@ -139,8 +143,10 @@ def database_finder(inp):
     amazonAnswer = db.getAmazonProductInfo(inp)
     if not amazonAnswer:
         return None
+    if amazonAnswer[2] == None or amazonAnswer[2] == "":
+        amazonAnswer[2] = None
     # price, unit, item name
-    return (float(amazonAnswer[1])/100, "unit", getShortenedName(amazonAnswer[0]))
+    return (float(amazonAnswer[1])/100, "unit", getShortenedName(amazonAnswer[0]), amazonAnswer[2])
 
 def mongodb_database_finder(inp):
     # get an array of words
