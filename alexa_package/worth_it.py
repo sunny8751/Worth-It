@@ -155,7 +155,6 @@ def mongodb_database_finder(inp):
     for i in range(len(inp)):
         for j in range(i + 1, len(inp)):
             possible.append(" ".join(inp[i:j]))
-    print possible
     for item in possible:
         itemInfo = db.getMongoInfo(item)
         if (itemInfo[0] != "0"):
