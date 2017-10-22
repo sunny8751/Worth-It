@@ -11,7 +11,6 @@ answer = None
 
 @website.route('/website')
 @website.route('/index')
-@website.route('/')
 def index():
    	return render_template('website/index.html',title='Worth It?')
 
