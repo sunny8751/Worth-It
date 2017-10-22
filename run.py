@@ -9,6 +9,8 @@ def run_app():
 	app.register_blueprint(website)
 	app.register_blueprint(alexa)
 	app.run(debug=True)
-	
+	return url_for('website.index')
+
+
 if __name__ == "__main__":
 	run_app()
