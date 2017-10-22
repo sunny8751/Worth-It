@@ -1,1 +1,12 @@
 Languages/Technologies used: Flask, Python, Alexa, MongoDB, Jinja2 Tempelating, Javascript, Jquery, 
+
+How we built it
+We built the Alexa Skill using the Flask-Ask framework for Python. The backend, where certain items, their prices and units are stored, was handled in MongoDB. Flask-Ask allowed us to easily interface python code just by using the already present intent schema used by the alexa skill. Other than the basic functionality of asking the skill to convert X into Y, one can also ask to add values to the database that is used by everyone.
+
+Challenges We Ran Into
+* One of the bigger challneges that we ran into was updating the UI asynchronsly in relation to the response that was given by the Alexa. Many times the alexa would give a response so soon that the UI would not accordingly update, causing the app to crash. In addition, many times the connection to the Amazon API would be down and the skill would not even search amazon to begin with.
+
+* Another challenge we ran into was that the Amazon API only allowed a certain number of searches in a given time interval. This was an obstacle that we did not think we could solve as it was a limitation from Amazon itself. The way we fixed this was to actually create a new account that uses the Amazon API and we would just, in code, alternate between the two for our API lookpus
+
+What We Learned
+We learned how to create an Alexa Skill
