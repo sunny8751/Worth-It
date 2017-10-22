@@ -1,5 +1,9 @@
 # Worth-It
 Visualize the price of a product in terms of products you already know using the Amazon Echo
+
+![Logo](https://github.com/sunny8751/Worth-It/blob/master/logo%20copy.png?raw=true)
+[Example Demonstration](https://youtu.be/0AM2WQz2kiU)
+
 ## What inspired us
 When I say that I pay ~$50,000/year for college, what does that actually mean? To some, that's just a really big number, but to me, that number is equivalent to 7,692 Chipotle bowls.
 We realized that in a world that is rapidly moving away from physical currency and even physically shopping, the worth of goods and products is becoming harder to quantify.  
@@ -18,4 +22,9 @@ We developed _Worth It_ by using the Flask-Ask framework to integrate Alexa skil
 ## What we learned
 We learned how to create an Alexa Skill, use Flask to create a web interface, and store information on a MongoDB database. All of these technologies were fairly new to us, so it was great being exposed to new skills.
 
-[Example Web App Update](https://raw.githubusercontent.com/sunny8751/Worth-It/master/worthit.gif)
+## Related Links
+
+* [Devpost](https://devpost.com/software/worth-it) - The hackathon Devpost
+* [Presentation](https://docs.google.com/presentation/d/1JSu8Pt7rGgZYWuYxLTpD-pBapFxYYHOrN8s1bCJ_XYo/edit?usp=sharing) - Presentation
+
+
