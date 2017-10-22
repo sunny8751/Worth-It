@@ -1,1 +1,1 @@
-web: gunicorn btvpython.wsgi
+web: gunicorn website_package.__init__
