@@ -58,8 +58,9 @@ def convert_intent(oi, ci):
     if not ci_data or not oi_data:
         state = render_template('error')
     else:
-        oi_price, oi_unit, oi_item = oi_data
-        ci_price, ci_unit, ci_item = ci_data
+        print(oi_data)
+        oi_price, oi_unit, oi_item, oi_image = oi_data
+        ci_price, ci_unit, ci_item, ci_image = ci_data
 
         compared = oi_price / ci_price
         compared = str(round(compared, 2))
@@ -68,9 +69,12 @@ def convert_intent(oi, ci):
             #make unit plural
             oi_unit = oi_unit + "s"
             ci_unit = ci_unit + "s"
-
+        if oi_image == None and ci_image == None:
+            image = "https://i.imgur.com/My1Shdi.png"
+        else:
+            image = oi_image if oi_image != None else ci_image
         state = render_template('state', oi_pass=oi_item, ci_pass=ci_item, ci_price=compared, ci_units=ci_unit)
-    return statement(state)
+    return statement(state).standard_card(title='Worth It', text=state, small_image_url=image)
 
 
 @ask.intent("AddIntent", mapping={'name':'item_name', 'price':'item_price', 'unit': 'item_unit'})
@@ -135,7 +139,9 @@ def database_finder(inp):
     amazonAnswer = db.getAmazonProductInfo(inp)
     if not amazonAnswer:
         return None
-    return (float(amazonAnswer[1])/100, "unit", getShortenedName(amazonAnswer[0]))
+    if amazonAnswer[2] == None or amazonAnswer[2] == "":
+        amazonAnswer[2] = None
+    return (float(amazonAnswer[1])/100, "unit", getShortenedName(amazonAnswer[0]), amazonAnswer[2])
 
 def mongodb_database_finder(inp):
     # get an array of words
