@@ -7,86 +7,48 @@
 	</script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script>window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')</script> -->
-     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+     <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
      <script type="text/javascript" src="{{ url_for('static', filename='js/typed.js') }}"></script>
      <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.quickfit.js') }}"></script>
      <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.6/socket.io.js"></script>
      <script type="text/javascript">
-       (function question_poll() {
-          console.log("new question poll")
-          var poll_interval=0;
-          $.ajax({
-                  url: "/question_poll",
-                  type: 'GET',
-                  dataType: 'text',
-                  async: true,
-                  success: function(data) {
-                          // clear the question and answer text
-                          $(".question").text('')
-                          $(".answer").text('')
-                          // remove previous animations
-                          $('.typed-cursor').remove()
-                          // start animation
-                          options = {strings: [data], typeSpeed: 30}
-                          var typed = new Typed(".question", options)
-                          poll_interval=0;
-                  },
-                  error: function () {
-                          console.log("question error")
-                          // var question = "Something went wrong in your request, please try again"
-                          // // clear the question and answer text
-                          // $(".question").text('')
-                          // $(".answer").text('')
-                          // // remove previous animations
-                          // $('.typed-cursor').remove()
-                          // // start animation
-                          // options = {strings: [question], typeSpeed: 30}
-                          // var typed = new Typed(".question", options)
-                          poll_interval=1000;
-                  },
-                  complete: function () {
-                          setTimeout(question_poll, poll_interval);
-                  }
-          });
-        })();
-       (function answer_poll() {
-          console.log("new answer poll")
-          var poll_interval=0;
-          $.ajax({
-                  url: "/answer_poll",
-                  type: 'GET',
-                  dataType: 'text',
-                  success: function(data) {
-                          // console.log(answer)
-                          // start animation
-                          options = {strings: [data], typeSpeed: 50}
-                          var typed = new Typed(".answer", options)
-                          poll_interval=0;
-                  },
-                  error: function () {
-                          console.log("answer error")
-                          // var answer = "Something went wrong in your request, please try again"
-                          // // start animation
-                          // options = {strings: [answer], typeSpeed: 50}
-                          // var typed = new Typed(".answer", options)
-                          poll_interval=1000;
-                  },
-                  complete: function () {
-                          setTimeout(answer_poll, poll_interval);
-                          // console.log("new answer poll")
-                  }
-          });
-        })();
+      $(document).ready(function(){
+        //connect to the socket server.
+        var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
+        //receive details from server
+        socket.on('question', function(msg) {
+            console.log("Received question" + msg.question);
+            $(".question").text('')
+            $(".answer").text('')
+            // $(".question").text(msg.question)
+            //remove previous animations
+            $('.typed-cursor').remove()
+            // start animation
+            options = {strings: [msg.question], typeSpeed: 30}
+            var typed = new Typed(".question", options)
+        });
+        socket.on('answer', function(msg) {
+            console.log("Received answer" + msg.answer);
+            // $(".answer").text(msg.answer)
+            // start animation
+            options = {strings: [msg.answer], typeSpeed: 50}
+            var typed = new Typed(".answer", options)
+        });
+
+
+    });
      </script>
   </head>
   <body>
       <p class="title" align="center">
-        Is it <img class="logo_image" src="/static/images/logo.png" alt="Logo">
+        Is it <img class="logo_image" src="https://i.imgur.com/My1Shdi.png">
       </p>
       <div id="question_div">
         <!-- <p class="hidden"></p> -->
         <div class="response">
-          <span class="question" id="response"><div class="prompt">Ask a question... Example:</div>"Alexa, ask Worth-It to compare Vanderbilt tuition to coke"</span>
+          <span class="question" id="response"><div class="prompt">Ask a question... </div>"Alexa, ask Worth-It to compare Vanderbilt tuition to coke"</span>
         </div>
       </div>
       
