@@ -97,7 +97,12 @@ def getAmazonProductInfo(productName):
 	response = amazon.ItemSearch(Keywords=productName, SearchIndex="All", ResponseGroup="Offers")
 	imageURL = amazon.ItemSearch(Keywords=productName, SearchIndex="All", ResponseGroup="Images")
 
-	s = imageURL.find("MediumImage").find("URL").string
+	if response == None or imageURL == None:
+		return None
+
+	url = None
+	if imageURL.find("MediumImage") != None:
+		url = imageURL.find("MediumImage").find("URL").string
 		# except urllib.error.HTTPError:
 		# 	pass
 
@@ -134,7 +139,7 @@ def getAmazonProductInfo(productName):
 		return None
 	description = response.find('Title').string
 
-	return (description, price, s)
+	return (description, price, url)
 
 
 # main code
@@ -143,14 +148,4 @@ def getAmazonProductInfo(productName):
 # getAmazonProductInfo("Kindle")
 # print(getAmazonProductInfo("Ramen"))
 # print(printMongoProducts())
-# print getAmazonProductInfo("Ramen")
-# print getAmazonProductInfo("iphone")
-# print getAmazonProductInfo("couch")
-# print getAmazonProductInfo("laptop")
-# print getAmazonProductInfo("coke")
-# print getAmazonProductInfo("mouse")
-# print getAmazonProductInfo("headphone")
-# print getAmazonProductInfo("backpack")
-# print getAmazonProductInfo("pants")
-# print getAmazonProductInfo("paper")
 

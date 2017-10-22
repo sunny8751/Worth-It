@@ -44,9 +44,24 @@ def new_game():
     return statement(welcome_msg).simple_card('Worth It - Welcome', 'Say things like: "Alexa, ask worth it to compare Bose Headphones to a Chick-Fil-A Milkshake"')
 
 
+@ask.intent("DefaultIntent")
+@ask.intent("YesIntent")
+def default_intent():
+    # error occured
+    # state = "There was a problem with the requested skill's response"
+    state = render_template('error')
+    website_package.views.setQuestion(state)
+    return statement(state)
+
 @ask.intent("ConvertIntent" , mapping={'oi': 'original_item', 'ci': 'compared_item'})
 def convert_intent(oi, ci):
     website_package.views.setQuestion("Convert {} to {}.".format(oi, ci))
+    if not oi or not ci:
+        import time
+        time.sleep(1)
+        state = "One of your items is not valid. Please try again"
+        website_package.views.setAnswer(state)
+        return statement(state)
     # test: oi = north face backpack
     # implement a search on amazon.com for the price of this item
     # print(oi)
@@ -58,6 +73,8 @@ def convert_intent(oi, ci):
     # test: ci = coffee
     # implement a mongdb lookup to get the value of coffee
     
+    image = "https://i.imgur.com/My1Shdi.png"
+
     if not ci_data or not oi_data:
         state = render_template('error')
     else:
@@ -76,7 +93,7 @@ def convert_intent(oi, ci):
         else:
             image = oi_image if oi_image != None else ci_image
         state = render_template('state', oi_pass=oi_item + " " + oi_unit, ci_pass=ci_item, ci_price=compared, ci_units=ci_unit)
-        website_package.views.setAnswer(state + ".")
+    website_package.views.setAnswer(state)
     return statement(state).standard_card(title="{} to {}".format(oi, ci), text=state, small_image_url=image)
 
 
@@ -142,10 +159,11 @@ def database_finder(inp):
     amazonAnswer = db.getAmazonProductInfo(inp)
     if not amazonAnswer:
         return None
-    if amazonAnswer[2] == None or amazonAnswer[2] == "":
-        amazonAnswer[2] = None
+    description, price, url = amazonAnswer
+    if url == None or url == "":
+        url = None
     # price, unit, item name
-    return (float(amazonAnswer[1])/100, "unit", getShortenedName(amazonAnswer[0]), amazonAnswer[2])
+    return (float(price)/100, "unit", getShortenedName(description), url)
 
 def mongodb_database_finder(inp):
     # get an array of words

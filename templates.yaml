@@ -1,9 +1,9 @@
-welcome: Welcome to worth it, where we compare things you want with things you need
+welcome: Welcome to worth it, where we compare things you want with things you know
 
 state: A {{oi_pass}} is worth {{ci_price}} {{ci_pass}} {{ci_units}}
 
-error: Something went wrong in your request, please try again
+error: Something went wrong in your request. Please try again
 
-success: Sucesfully added {{ itemname }} to database
+success: Successfully added {{ itemname }} to database
 
-remove: Removed {{ itemname }}
+remove: Removed {{ itemname }} from database

@@ -31,8 +31,8 @@ def questionPoll():
     # json_state = "".join(data) #remove whitespace
   	data = question
    	question = None
-   	# print "polling:", json.dumps({"data": answer})
-   	return json.dumps({"data": data})
+   	print "q polling:", data
+   	return data
 
 @website.route('/answer_poll')
 def answerPoll():
@@ -50,8 +50,8 @@ def answerPoll():
     # json_state = "".join(data) #remove whitespace
   	data = answer
    	answer = None
-   	# print "polling:", json.dumps({"data": answer})
-   	return json.dumps({"data": data})
+   	print "a polling:", data
+   	return data
 
 def setQuestion(s):
 	global question

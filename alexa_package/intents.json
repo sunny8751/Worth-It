@@ -48,7 +48,16 @@
         "to convert a {original_item} into a {compared_item}",
         "to convert a {original_item} into {compared_item}",
         "convert {original_item} to a {compared_item}",
-        "compare {original_item} to a {compared_item}"
+        "compare {original_item} to a {compared_item}",
+        "compare {original_item} and {compared_item}",
+        "compare {original_item} and a {compared_item}",
+        "compare a {original_item} and a {compared_item}",
+        "convert {original_item} and {compared_item}",
+        "to convert a {original_item} and a {compared_item}",
+        "what {original_item} is in {compared_item}",
+        "how much a {original_item} is in {compared_item}",
+        "to get {original_item} in {compared_item}",
+        "to find {original_item} in {compared_item}"
       ],
       "slots": [
         {
@@ -78,11 +87,8 @@
       ]
     },
     {
-      "name": "YesIntent",
-      "samples": [
-        "yes",
-        "sure"
-      ],
+      "name": "DefaultIntent",
+      "samples": [],
       "slots": []
     }
   ],
