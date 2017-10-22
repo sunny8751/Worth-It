@@ -11,36 +11,90 @@
      <script type="text/javascript" src="{{ url_for('static', filename='js/typed.js') }}"></script>
      <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.quickfit.js') }}"></script>
      <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}"></script>
-     
+     <script type="text/javascript">
+       (function question_poll() {
+          var poll_interval=0;
+          $.ajax({
+                  url: "/question_poll",
+                  type: 'GET',
+                  dataType: 'json',
+                  success: function(data) {
+                          var question = data["data"]
+                          console.log(question)
+                          // clear the question and answer text
+                          $(".question").text('')
+                          $(".answer").text('')
+                          // remove previous animations
+                          $('.typed-cursor').remove()
+                          // start animation
+                          options = {strings: [question], typeSpeed: 30}
+                          var typed = new Typed(".question", options)
+                          poll_interval=0;
+                  },
+                  error: function () {
+                          console.log("error")
+                          poll_interval=1000;
+                  },
+                  complete: function () {
+                          setTimeout(question_poll, poll_interval);
+                          console.log("new question poll")
+                  },
+          });
+        })();
+       (function answer_poll() {
+          var poll_interval=0;
+          $.ajax({
+                  url: "/answer_poll",
+                  type: 'GET',
+                  dataType: 'json',
+                  success: function(data) {
+                          var answer = data["data"]
+                          console.log(answer)
+                          // start animation
+                          options = {strings: [answer], typeSpeed: 50}
+                          var typed = new Typed(".answer", options)
+                          poll_interval=0;
+                  },
+                  error: function () {
+                          console.log("error")
+                          poll_interval=1000;
+                  },
+                  complete: function () {
+                          setTimeout(answer_poll, poll_interval);
+                          console.log("new answer poll")
+                  },
+          });
+        })();
+     </script>
   </head>
   <body>
       <div id="question_div">
-        <p class="hidden">{{ question }}</p>
-      </div>
+        <p class="hidden"></p>
       <div class="response">
         <span class="question" id="response"></span>
-        <script type="text/javascript">
+        <!-- <script type="text/javascript">
           var typed = new Typed(".question", {
             stringsElement: '#question_div',
             typeSpeed: 30
           });
         </script>
-    </div>
+ -->    </div>
+      </div>
       
 
 
       <div id="answer_div">
-        <h1 id="answer">{{ answer }}</h1>
-      </div>
+        <h1 id="answer"></h1>
       <div class="response">
         <span class="answer" id="response"></span>
-        <script type="text/javascript">
+        <!-- <script type="text/javascript">
         var typed = new Typed(".answer", {
           stringsElement: '#answer_div',
           typeSpeed: 30
         });
-      </script>
+      </script> -->
     </div>
+      </div>
 
       
   </body>

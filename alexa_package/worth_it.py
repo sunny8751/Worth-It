@@ -61,7 +61,7 @@ def convert_intent(oi, ci):
     if not ci_data or not oi_data:
         state = render_template('error')
     else:
-        print(oi_data)
+        # print(oi_data)
         oi_price, oi_unit, oi_item, oi_image = oi_data
         ci_price, ci_unit, ci_item, ci_image = ci_data
 
@@ -70,15 +70,14 @@ def convert_intent(oi, ci):
 
         if compared != 1:
             #make unit plural
-            oi_unit = oi_unit + "s"
             ci_unit = ci_unit + "s"
         if oi_image == None and ci_image == None:
             image = "https://i.imgur.com/My1Shdi.png"
         else:
             image = oi_image if oi_image != None else ci_image
-        state = render_template('state', oi_pass=oi_item, ci_pass=ci_item, ci_price=compared, ci_units=ci_unit)
+        state = render_template('state', oi_pass=oi_item + " " + oi_unit, ci_pass=ci_item, ci_price=compared, ci_units=ci_unit)
         website_package.views.setAnswer(state + ".")
-    return statement(state).standard_card(title='Worth It', text=state, small_image_url=image)
+    return statement(state).standard_card(title="{} to {}".format(oi, ci), text=state, small_image_url=image)
 
 
 @ask.intent("AddIntent", mapping={'name':'item_name', 'price':'item_price', 'unit': 'item_unit'})
@@ -156,12 +155,11 @@ def mongodb_database_finder(inp):
     for i in range(len(inp)):
         for j in range(i + 1, len(inp)):
             possible.append(" ".join(inp[i:j]))
-    print possible
     for item in possible:
         itemInfo = db.getMongoInfo(item)
         if (itemInfo[0] != "0"):
             # price, unit, item name
-            return (float(value), itemInfo[1], itemInfo[0])
+            return (float(itemInfo[0]), itemInfo[1], item, None)
     return
 
 # if __name__ == '__main__':
