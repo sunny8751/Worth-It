@@ -18,14 +18,15 @@ def error_handler(err):
 
 
 # use Bottlenose to access Amazon Product Advertising API
-AWS_ACCESS_KEY_ID1 = 'AKIAJIOGJFBGV2UXRUAQ'
-AWS_SECRET_ACCESS_KEY1 = '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'
-AWS_ASSOCIATE_TAG1 = 'sunny8751-20'
+# TODO: Fill in two differenta ccount information
+AWS_ACCESS_KEY_ID1 = None
+AWS_SECRET_ACCESS_KEY1 = None
+AWS_ASSOCIATE_TAG1 = None
 
 
-AWS_ACCESS_KEY_ID2 = 'AKIAJQTX5XV3N2Y2R7ZA'
-AWS_SECRET_ACCESS_KEY2 = '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'
-AWS_ASSOCIATE_TAG2 = 'buyit083-20'
+AWS_ACCESS_KEY_ID2 = None
+AWS_SECRET_ACCESS_KEY2 = None
+AWS_ASSOCIATE_TAG2 = None
 
 
 def printMongoProducts():
